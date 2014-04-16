@@ -45,15 +45,15 @@ function VariantOptions(params) {
 
   function init() {
     divs = $('#product-variants .variant-options');
-    disable(divs.find('.option-value').addClass('locked'));
+    disable(divs.find('a.option-value').addClass('locked'));
     update();
-    enable(parent.find('.option-value'));
+    enable(parent.find('a.option-value'));
     toggle();
-    $('div.variant-options .clear-button').hide().click(handle_clear);
+    $('div.variant-options a.clear-button').hide().click(handle_clear);
 
     if (default_instock) {
       divs.each(function(){
-        $(this).find("ul.variant-option-values li.in-stock:first").click();
+        $(this).find("ul.variant-option-values li a.in-stock:first").click();
       });
     }
   }
@@ -65,8 +65,8 @@ function VariantOptions(params) {
   function update(i) {
     index = isNaN(i) ? index : i;
     parent = $(divs.get(index));
-    buttons = parent.find('.option-value');
-    parent.find('.clear-button').hide();
+    buttons = parent.find('a.option-value');
+    parent.find('a.clear-button').hide();
   }
 
   function disable(btns) {
@@ -89,7 +89,7 @@ function VariantOptions(params) {
 
   function inventory(btns) {
     var keys, variants, selected = {};
-    var sels = $.map(divs.find('.selected'), function(i) { return i.rel });
+    var sels = $.map(divs.find('a.selected'), function(i) { return i.rel });
     $.each(sels, function(key, value) {
       key = value.split('-');
       var v = options[key[0]][key[1]];
@@ -159,7 +159,7 @@ function VariantOptions(params) {
   // Find matching variants for selected option value
   // Set price or price range if matching variants have different prices.
   function find_variant() {
-    var selected = divs.find('.selected');
+    var selected = divs.find('a.selected');
     var variants = get_variant_objects(selected.get(0).rel);
     if (selected.length == divs.length) {
       return variant = variants[selection[0]];
@@ -202,7 +202,7 @@ function VariantOptions(params) {
       price = $('#product-price .price').addClass('unselected')
       // Replace product price by "(select)" only when there are at least 1 variant not out-of-stock
       variants = $("div.variant-options.index-0")
-      if (variants.find(".option-value.out-of-stock").length != variants.find(".option-value").length)
+      if (variants.find("a.option-value.out-of-stock").length != variants.find("a.option-value").length)
         price.text(i18n.variant_options_select);
     }
   }
@@ -213,8 +213,8 @@ function VariantOptions(params) {
     enable(buttons.removeClass('selected'));
     toggle();
     parent.nextAll().each(function(index, element) {
-      disable($(element).find('.option-value').show().removeClass('in-stock out-of-stock').addClass('locked').unbind('click'));
-      $(element).find('.clear-button').hide();
+      disable($(element).find('a.option-value').show().removeClass('in-stock out-of-stock').addClass('locked').unbind('click'));
+      $(element).find('a.clear-button').hide();
       $(element).find('h6 strong.selection').html('').removeClass('out-of-stock');
     });
     parent.find('strong.selection').html('').removeClass('out-of-stock');
@@ -237,7 +237,7 @@ function VariantOptions(params) {
     }
     disable(buttons);
     var a = enable(a.addClass('selected'));
-    parent.find('.clear-button').css('display', 'inline-block');
+    parent.find('a.clear-button').css('display', 'inline-block');
     advance();
     handle_selected();
 
@@ -246,7 +246,7 @@ function VariantOptions(params) {
   }
 
   function handle_selected() {
-    var selected = divs.find('.selected');
+    var selected = divs.find('a.selected');
     selected.each(function(){
       $this = $(this)
       var selection = $this.parents('.variant-options').find('h6 strong.selection')
