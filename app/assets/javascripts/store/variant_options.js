@@ -45,9 +45,9 @@ function VariantOptions(params) {
 
   function init() {
     divs = $('#product-variants .variant-options');
-    disable(divs.find('a.option-value').addClass('locked'));
+    disable(divs.find('.option-value').addClass('locked'));
     update();
-    enable(parent.find('a.option-value'));
+    enable(parent.find('.option-value'));
     toggle();
 
     if (default_instock) {
@@ -64,7 +64,7 @@ function VariantOptions(params) {
   function update(i) {
     index = isNaN(i) ? index : i;
     parent = $(divs.get(index));
-    buttons = parent.find('a.option-value');
+    buttons = parent.find('.option-value');
   }
 
   function disable(btns) {
@@ -87,7 +87,7 @@ function VariantOptions(params) {
 
   function inventory(btns) {
     var keys, variants, selected = {};
-    var sels = $.map(divs.find('a.selected'), function(i) { return i.rel });
+    var sels = $.map(divs.find('.selected'), function(i) { return i.rel });
     $.each(sels, function(key, value) {
       key = value.split('-');
       var v = options[key[0]][key[1]];
@@ -157,7 +157,7 @@ function VariantOptions(params) {
   // Find matching variants for selected option value
   // Set price or price range if matching variants have different prices.
   function find_variant() {
-    var selected = divs.find('a.selected');
+    var selected = divs.find('.selected');
     var variants = get_variant_objects(selected.get(0).rel);
     if (selected.length == divs.length) {
       return variant = variants[selection[0]];
@@ -200,7 +200,7 @@ function VariantOptions(params) {
       price = $('#product-price .price').addClass('unselected')
       // Replace product price by "(select)" only when there are at least 1 variant not out-of-stock
       variants = $("div.variant-options.index-0")
-      if (variants.find("a.option-value.out-of-stock").length != variants.find("a.option-value").length)
+      if (variants.find(".option-value.out-of-stock").length != variants.find(".option-value").length)
         price.text(i18n.variant_options_select);
     }
   }
@@ -219,7 +219,7 @@ function VariantOptions(params) {
   }
 
   function handle_selected() {
-    var selected = divs.find('a.selected');
+    var selected = divs.find('.selected');
     selected.each(function(){
       $this = $(this)
       var selection = $this.parents('.variant-options-values').find('.current')
