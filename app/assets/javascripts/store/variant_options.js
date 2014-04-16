@@ -49,11 +49,10 @@ function VariantOptions(params) {
     update();
     enable(parent.find('a.option-value'));
     toggle();
-    $('div.variant-options a.clear-button').hide().click(handle_clear);
 
     if (default_instock) {
       divs.each(function(){
-        $(this).find("ul.variant-option-values li a.in-stock:first").click();
+        $(this).find("ul.variant-option-values li.in-stock:first").click();
       });
     }
   }
@@ -66,7 +65,6 @@ function VariantOptions(params) {
     index = isNaN(i) ? index : i;
     parent = $(divs.get(index));
     buttons = parent.find('a.option-value');
-    parent.find('a.clear-button').hide();
   }
 
   function disable(btns) {
@@ -207,37 +205,12 @@ function VariantOptions(params) {
     }
   }
 
-  function clear(i) {
-    variant = null;
-    update(i);
-    enable(buttons.removeClass('selected'));
-    toggle();
-    parent.nextAll().each(function(index, element) {
-      disable($(element).find('a.option-value').show().removeClass('in-stock out-of-stock').addClass('locked').unbind('click'));
-      $(element).find('a.clear-button').hide();
-      $(element).find('h6 strong.selection').html('').removeClass('out-of-stock');
-    });
-    parent.find('strong.selection').html('').removeClass('out-of-stock');
-    show_all_variant_images();
-  }
-
-
-  function handle_clear(evt) {
-    evt.preventDefault();
-    clear(get_index(this));
-  }
-
   function handle_click(evt) {
     evt.preventDefault();
     variant = null;
     selection = [];
-    var a = $(this);
-    if (!parent.has(a).length) {
-      clear(divs.index(a.parents('.variant-options:first')));
-    }
     disable(buttons);
     var a = enable(a.addClass('selected'));
-    parent.find('a.clear-button').css('display', 'inline-block');
     advance();
     handle_selected();
 
@@ -249,7 +222,7 @@ function VariantOptions(params) {
     var selected = divs.find('a.selected');
     selected.each(function(){
       $this = $(this)
-      var selection = $this.parents('.variant-options').find('h6 strong.selection')
+      var selection = $this.parents('.variant-options-values').find('.current')
       selection.html($this.attr('title'));
 
       if ($this.hasClass('out-of-stock'))

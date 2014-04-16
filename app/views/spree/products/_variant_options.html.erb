@@ -4,13 +4,8 @@
     <% index = 0 %>
     <% @product.grouped_option_values.each do |type, values| %>
       <div id="<%= dom_id(type) %>" class="variant-options index-<%= index %>">
-        <h6 class="variant-option-type">
-          <%= label_tag 'option-value-name', Spree.t(:select_a, :index => index + 1, :name => type.presentation) %>
-          <strong class='selection'></strong>
-          <%= link_to "", "#clear", :class => "icon-remove clear-button clear-index-#{index}" %>
-        </h6>
-
         <ul class="variant-option-values" class='inline'>
+          <li class="current">Select</li>
         <% values.sort_by(&:position).each do |value| %>
           <% classes = ["option-value"] %>
           <% unless (variants = @product.variants_for_option_value(value)).empty? %>
@@ -19,7 +14,6 @@
             <li><%= link_to value.has_image? ? image_tag(value.image.url, :alt => value.presentation) : content_tag(:span, value.presentation), "#", :title => value.presentation, :class => classes.join(" "), :rel => "#{type.id}-#{value.id}" %></li>
           <% end %>
         <% end %>
-          <li class="clear"></li>
         </ul>
       </div>
       <% index += 1 %>
