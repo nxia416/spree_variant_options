@@ -210,7 +210,7 @@ function VariantOptions(params) {
     variant = null;
     selection = [];
     disable(buttons);
-    var a = enable(a.addClass('selected'));
+    var a = enable($(this).addClass('selected'));
     advance();
     handle_selected();
 
