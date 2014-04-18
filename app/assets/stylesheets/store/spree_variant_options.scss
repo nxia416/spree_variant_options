@@ -1,0 +1,66 @@
+.variant-option-values {
+  $borderColor: #bf451b;
+  $darkGrey: #363636;
+  font-size: 14px;
+  font-family: Lato, sans-serif;
+  font-weight: bold;
+  color: $darkGrey;
+  border: 1px solid $borderColor;
+  width: 100%;
+  margin: 5px auto;
+  cursor: pointer;
+  @include border-radius(3px);
+  @include box-sizing(border-box);
+  list-style: none;
+  padding: 0;
+  background: #fff image-url("select-arrow2.png") top 17px right 20px no-repeat;
+
+  &.active {
+    li {
+      display: block;
+    }
+  }
+
+  li {
+    padding: 10px 15px;
+    display: none;
+    &.current {
+      display: block;
+      border-bottom: 1px solid $borderColor;
+      margin-bottom: -1px;
+      &:before {
+        content: none;
+      }
+    }
+
+    &:before {
+      content: "";
+      display: inline-block;
+      float: left;
+      margin-right: 12px;
+      background: image-url("checkbox-small.png") top left no-repeat;
+      width: 14px;
+      height: 14px;
+      margin-top: 4px;
+    }
+    &.current:before {
+      background: none;
+    }
+    &.selected:before {
+      background-position: -14px;
+    }
+  }
+}
+.option-value.out-of-stock {
+  display: block;
+  color: #aaa;
+  cursor: default;
+}
+.option-value.locked,
+.option-value.locked:hover {
+  background-color: #fff;
+  border-color: #f0f0f0;
+  color: #ddd;
+  cursor: default;
+}
+
