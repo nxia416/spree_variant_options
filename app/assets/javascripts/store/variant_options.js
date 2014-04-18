@@ -49,7 +49,6 @@ function VariantOptions(params) {
     update();
     enable(parent.find('.option-value'));
     toggle();
-    $('div.variant-options a.clear-button').hide().click(handle_clear);
 
     if (default_instock) {
       divs.each(function(){
@@ -88,7 +87,7 @@ function VariantOptions(params) {
 
   function inventory(btns) {
     var keys, variants, selected = {};
-    var sels = $.map(divs.find('.selected'), function(i) { return i.rel });
+    var sels = $.map(divs.find('.selected'), function(i) { return $(i).attr("rel"); });
     $.each(sels, function(key, value) {
       key = value.split('-');
       var v = options[key[0]][key[1]];
@@ -101,7 +100,7 @@ function VariantOptions(params) {
       }
     });
     btns.removeClass('in-stock out-of-stock unavailable').each(function(i, element) {
-      var variants = get_variant_objects(element.rel);
+      var variants = get_variant_objects($(element).attr("rel"));
       var keys = $.keys(variants);
       if (keys.length == 0) {
         disable($(element).addClass('unavailable locked').unbind('click'));
@@ -159,7 +158,7 @@ function VariantOptions(params) {
   // Set price or price range if matching variants have different prices.
   function find_variant() {
     var selected = divs.find('.selected');
-    var variants = get_variant_objects(selected.get(0).rel);
+    var variants = get_variant_objects(selected.attr("rel"));
     if (selected.length == divs.length) {
       return variant = variants[selection[0]];
     } else {
@@ -212,7 +211,7 @@ function VariantOptions(params) {
     enable(buttons.removeClass('selected'));
     toggle();
     parent.nextAll().each(function(index, element) {
-      disable($(element).find('.option-value').show().removeClass('in-stock out-of-stock').addClass('locked').unbind('click'));
+      disable($(element).find('.option-value').removeClass('in-stock out-of-stock').addClass('locked').unbind('click'));
       $(element).find('h6 strong.selection').html('').removeClass('out-of-stock');
     });
     parent.find('strong.selection').html('').removeClass('out-of-stock');
@@ -246,13 +245,13 @@ function VariantOptions(params) {
     var selected = divs.find('.selected');
     selected.each(function(){
       $this = $(this)
-      var selection = $this.parents('.variant-options').find('h6 strong.selection')
-      selection.html($this.attr('title'));
+      var selection = $this.parents('.variant-options').find('.current')
+      selection.html($this.text());
 
       if ($this.hasClass('out-of-stock'))
         selection.addClass('out-of-stock').attr('title', i18n.out_of_stock);
     });
   };
   $(document).ready(init);
-
 };
+
