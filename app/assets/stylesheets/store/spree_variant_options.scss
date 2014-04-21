@@ -1,6 +1,5 @@
 .variant-option-values {
   $borderColor: #bf451b;
-  $darkGrey: #363636;
   font-size: 14px;
   font-family: Lato, sans-serif;
   font-weight: bold;
@@ -51,16 +50,12 @@
     }
   }
 }
-.option-value.out-of-stock {
-  display: block;
-  color: #aaa;
-  cursor: default;
-}
-.option-value.locked,
-.option-value.locked:hover {
-  background-color: #fff;
-  border-color: #f0f0f0;
+.option-value {
   color: #ddd;
   cursor: default;
+  &.in-stock {
+    color: $darkGrey;
+    cursor: pointer;
+  }
 }
 
