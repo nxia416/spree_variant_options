@@ -24,6 +24,8 @@ Gem::Specification.new do |s|
   s.add_dependency('spree_api',      '~> 2.2.0.beta')
   s.add_dependency('spree_frontend', '~> 2.2.0.beta')
   s.add_dependency('spree_backend',  '~> 2.2.0.beta')
+  s.add_dependency('sass-rails',  '~> 4.0.2')
+  s.add_dependency('compass-rails')
 
   # Development
   s.add_development_dependency('spree_sample',     '~> 2.2.0.beta')
