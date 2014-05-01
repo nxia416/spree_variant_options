@@ -40,6 +40,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency('database_cleaner', '~> 1.2.0')
   s.add_development_dependency('sqlite3',          '~> 1.3')
   s.add_development_dependency('coffee-rails',     '~> 4.0')
+  s.add_development_dependency('sass-rails',  '~> 4.0.2')
+  s.add_development_dependency('compass-rails')
   s.add_development_dependency('capybara')
   s.add_development_dependency('launchy')
   s.add_development_dependency('debugger')
