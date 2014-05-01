@@ -43,7 +43,7 @@ window.variantOptions = (params) ->
           $("#option-" + key).addClass("in-stock")
           if $("#option-" + key).hasClass("selected")
             $('#variant_id').val(variant[id].id)
-            $('#cart-form button[type=submit]').attr('disabled', false).fadeTo(100, 1)
+            $('#cart-form button[type=submit]').attr('disabled', false)
 
     # if this selection conflicts with the previous selection, reset the previous selection
     selected = otherOptionSelector.find(".selected")
@@ -54,6 +54,6 @@ window.variantOptions = (params) ->
 
     # fade out the cart button if selection is not complete
     unless $(".selected").length == 2
-      $('#cart-form button[type=submit]').attr('disabled', true).fadeTo(0, 0.5)
+      $('#cart-form button[type=submit]').attr('disabled', true)
     return
 
