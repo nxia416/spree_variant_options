@@ -15,6 +15,7 @@ window.variantOptions = (params) ->
   $("html").on "click", ".option-value", ->
     parent = $(@).parents('.variant-options')
     optionId = $(@).parents(".variant-options").attr("id").split("_")[2]
+    optionIndex = $().parents(".variant-options").data("index")
     elemId = $(@).attr("id").split("-")[1]
 
     # update selected and 'current' text
@@ -31,7 +32,7 @@ window.variantOptions = (params) ->
       key
 
     # reset the other option selector by blacking out all choices
-    otherOptionId = optionId % 2 + 1
+    otherOptionId = $("[data-index=" + (optionIndex % 2 + 1)).attr("id").split("_")[2]
     otherOptionSelector = $("#option_type_" + otherOptionId)
     otherOptionSelector.find(".option-value").removeClass("in-stock")
     # ...then re-enable the ones that are available, and find the variant_id if both options have been selected
