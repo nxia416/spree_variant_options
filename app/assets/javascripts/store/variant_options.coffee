@@ -32,7 +32,7 @@ window.variantOptions = (params) ->
       key
 
     # reset the other option selector by blacking out all choices
-    otherOptionId = $("[data-index=" + (optionIndex % 2 + 1)).attr("id").split("_")[2]
+    otherOptionId = $("[data-index=" + (optionIndex + 1) % 2 + "]").attr("id").split("_")[2]
     otherOptionSelector = $("#option_type_" + otherOptionId)
     otherOptionSelector.find(".option-value").removeClass("in-stock")
     # ...then re-enable the ones that are available, and find the variant_id if both options have been selected
