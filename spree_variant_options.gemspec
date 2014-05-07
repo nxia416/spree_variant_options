@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
   s.add_dependency('spree_backend',  '~> 2.2.0.beta')
   s.add_dependency('sass-rails',  '~> 4.0.2')
   s.add_dependency('compass-rails')
-  s.add_dependency('spree_currency_converter', :git => 'https://github.com/casualsteps/spree_currency_converter', :branch => 'master')
 
   # Development
   s.add_development_dependency('spree_sample',     '~> 2.2.0.beta')
