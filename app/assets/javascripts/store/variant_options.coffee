@@ -15,7 +15,7 @@ window.variantOptions = (params) ->
   $("html").on "click", ".option-value", ->
     parent = $(@).parents('.variant-options')
     optionId = $(@).parents(".variant-options").attr("id").split("_")[2]
-    optionIndex = $().parents(".variant-options").data("index")
+    optionIndex = $(@).parents(".variant-options").data("index")
     elemId = $(@).attr("id").split("-")[1]
 
     # update selected and 'current' text
