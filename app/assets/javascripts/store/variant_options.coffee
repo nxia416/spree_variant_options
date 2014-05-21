@@ -46,7 +46,6 @@ window.variantOptions = (params) ->
             $('#variant_id').val(variant[id].id)
             $('#cart-form button[type=submit]').attr('disabled', false)
             $("#cart-form .price").text variant[id].price
-            console.log variant[id].price + "grapes"
 
     # if this selection conflicts with the previous selection, reset the previous selection
     selected = otherOptionSelector.find(".selected")
