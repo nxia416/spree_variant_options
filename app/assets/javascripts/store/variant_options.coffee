@@ -1,5 +1,6 @@
 window.variantOptions = (params) ->
   options = params['options']
+  console.log options
 
   # variant options dropdowns
   $("html").on "click", ".variant-option-values", (e) ->
