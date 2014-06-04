@@ -1,6 +1,5 @@
 window.variantOptions = (params) ->
   options = params['options']
-  console.log options
 
   # variant options dropdowns
   $("html").on "click", ".variant-option-values", (e) ->
@@ -42,7 +41,7 @@ window.variantOptions = (params) ->
     for key,variant of variants
       for id in ids
         if typeof variant[id] == "object"
-          $("#option-" + key).addClass("in-stock")
+          if variant[id].in_stock then $("#option-" + key).addClass("in-stock")
           if $("#option-" + key).hasClass("selected")
             $('#variant_id').val(variant[id].id)
             $('#cart-form button[type=submit]').attr('disabled', false)
