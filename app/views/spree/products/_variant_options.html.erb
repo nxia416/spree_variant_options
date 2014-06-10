@@ -4,7 +4,7 @@
     <% @product.grouped_option_values.each do |type, values| %>
       <div id="<%= dom_id(type) %>" class="variant-options" data-index="<%= index %>">
         <select class="variant-option-values">
-          <%= content_tag :option, :val => "" do %>
+          <%= content_tag :option do %>
             <%= type.presentation.force_encoding("utf-8") %>를 고르세요
           <% end %>
           <% values.sort_by{|a| a.name.split(" ")[0].to_i}.each do |value| %>
