@@ -3,19 +3,19 @@
     <% index = 0 %>
     <% @product.grouped_option_values.each do |type, values| %>
       <div id="<%= dom_id(type) %>" class="variant-options" data-index="<%= index %>">
-        <ul class="variant-option-values" class='inline'>
-          <%= content_tag :li, :class => "current", :data => { "title" => type.presentation + "를 고르세요" } do %>
+        <select class="variant-option-values">
+          <%= content_tag :option do %>
             <%= type.presentation.force_encoding("utf-8") %>를 고르세요
           <% end %>
           <% values.sort_by{|a| a.name.split(" ")[0].to_i}.each do |value| %>
           <% classes = ["option-value"] %>
           <% unless (variants = @product.variants_for_option_value(value)).empty? %>
             <% classes << ( variants.any? { |v| v.in_stock? } ? "in-stock" : "out-of-stock" ) if index == 0 %>
-            <%= content_tag :li, value.presentation, :class => classes.join(" "), :id => "option-#{value.id}" %>
+            <%= content_tag :option, value.presentation, :class => classes.join(" "), :id => "option-#{value.id}" %>
           <% end %>
         <% end %>
             <!-- value.has_image? ? image_tag(value.image.url, :alt => value.presentation) : content_tag(:span, -->
-        </ul>
+        </select>
       </div>
       <% index += 1 %>
     <% end %>
