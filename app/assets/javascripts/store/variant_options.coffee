@@ -2,6 +2,9 @@ window.variantOptions = (params) ->
   options = params['options']
   outOfStockStr = "[품절]"
 
+  $ ->
+    $(".variant-option-values").change()
+
   # When the user selects a variant option...
   $(document).on "change", ".variant-option-values", ->
     parent = $(@).parents('.variant-options')
