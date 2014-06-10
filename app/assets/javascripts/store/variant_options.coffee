@@ -2,20 +2,23 @@ window.variantOptions = (params) ->
   options = params['options']
   outOfStockStr = "[품절]"
 
-  # select a variant option
+  # When the user selects a variant option...
   $(document).on "change", ".variant-option-values", ->
     parent = $(@).parents('.variant-options')
     optionId = $(@).parents(".variant-options").attr("id").split("_")[2]
     optionIndex = $(@).parents(".variant-options").data("index")
+    otherOptionId = $("[data-index=" + (optionIndex + 1) % 2 + "]").attr("id").split("_")[2]
+    otherOptionSelector = $("#option_type_" + otherOptionId)
 
-    # reset "out of stock" text
-    unless $(@).find("option:selected").hasClass("in-stock")
-      $(".option-value").each ->
+    # disable the add to cart button – we'll reenable it later
+    $('#cart-form button[type=submit]').attr('disabled', true)
+
+    # if this is the "select an option" option, reset availability on the other option and return
+    if $(@)[0].selectedIndex == 0
+      otherOptionSelector.find(".option-value").each ->
         $(@).text($(@).text().replace("#{outOfStockStr} ", ""))
-
-    # if this is the "select an option" option, don't do anything else
-    return if $(@)[0].selectedIndex == 0
-    console.log $(@)[0].selectedIndex
+          .addClass("in-stock")
+      return
 
     # get list of variants that match this option value
     elemId = $(@).find("option:selected").attr("id").split("-")[1]
@@ -23,15 +26,8 @@ window.variantOptions = (params) ->
     ids = for key of variants
       key
 
-    # reset the other option selector by blacking out all choices
-    otherOptionId = $("[data-index=" + (optionIndex + 1) % 2 + "]").attr("id").split("_")[2]
-    otherOptionSelector = $("#option_type_" + otherOptionId)
+    # update in-stock status of the other option, and find the variant_id if both options have been selected
     otherOptionSelector.find(".option-value").removeClass("in-stock")
-    otherOptionSelector.find(".option-value").each ->
-      text = $(@).text().replace("#{outOfStockStr} ", "")
-      $(@).text("#{outOfStockStr} #{text}")
-
-    # ...then re-enable the ones that are available, and find the variant_id if both options have been selected
     variant_id
     variants = options[otherOptionId]
     for key,variant of variants
@@ -39,19 +35,29 @@ window.variantOptions = (params) ->
         if typeof variant[id] == "object"
           if variant[id].in_stock
             $("#option-#{key}").addClass("in-stock")
-            $("#option-#{key}").text($("#option-#{key}").text().replace("#{outOfStockStr} ", "") )
-          if $("#option-#{key}").val() == $(@).val()
+          # if this option is selected, we have a variant
+          if $("#option-#{key}").val() == $("#option-#{key}").parent().val()
             $('#variant_id').val(variant[id].id)
             $('#cart-form button[type=submit]').attr('disabled', false)
             $("#cart-form .price").text variant[id].price
 
-    # if this selection conflicts with the previous selection, reset the previous selection
+    # reset "out of stock" display and update it
+    if $(@).find("option:selected").hasClass("in-stock")
+      otherOptionSelector.find(".option-value").each ->
+        text = $(@).text().replace("#{outOfStockStr} ", "")
+        $(@).text("#{text}")
+    else
+      $(".option-value").each ->
+        $(@).text($(@).text().replace("#{outOfStockStr} ", ""))
+
+    otherOptionSelector.find(".option-value").not(".in-stock").each ->
+      text = $(@).text().replace("#{outOfStockStr} ", "")
+      $(@).text("#{outOfStockStr} #{text}")
+
+    # if the user selects an option that is out-of-stock in this combination, reset the other option
     selected = otherOptionSelector.find("option:selected")
     unless selected.hasClass("in-stock")
       selected.parent()[0].selectedIndex = 0
 
-    # fade out the cart button if selection is not complete
-    unless $(".selected").length == 2
-      $('#cart-form button[type=submit]').attr('disabled', true)
     return
 
