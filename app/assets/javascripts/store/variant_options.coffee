@@ -1,5 +1,6 @@
 window.variantOptions = (params) ->
   options = params['options']
+  outOfStockStr = " [품절]"
 
   # select a variant option
   $(document).on "change", ".variant-option-values", ->
@@ -22,8 +23,8 @@ window.variantOptions = (params) ->
     otherOptionSelector = $("#option_type_" + otherOptionId)
     otherOptionSelector.find(".option-value").removeClass("in-stock")
     otherOptionSelector.find(".option-value").each ->
-      text = $(@).text().replace("[X] ", "")
-      $(@).text("[X] " + text)
+      text = $(@).text().replace(outOfStockStr, "")
+      $(@).text(text + outOfStockStr)
 
     # ...then re-enable the ones that are available, and find the variant_id if both options have been selected
     variant_id
@@ -33,7 +34,7 @@ window.variantOptions = (params) ->
         if typeof variant[id] == "object"
           if variant[id].in_stock
             $("#option-#{key}").addClass("in-stock")
-            $("#option-#{key}").text($("#option-#{key}").text().replace("[X] ", "") )
+            $("#option-#{key}").text($("#option-#{key}").text().replace(outOfStockStr, "") )
           if $("#option-#{key}").val() == $(@).val()
             $('#variant_id').val(variant[id].id)
             $('#cart-form button[type=submit]').attr('disabled', false)
