@@ -1,6 +1,8 @@
 @import "compass";
 
+button {
+  @include transition(opacity 0.2s ease);
+}
 button[disabled] {
   @include opacity(0.5);
-  @include transition(opacity 0.2s ease);
 }
