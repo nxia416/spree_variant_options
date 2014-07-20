@@ -1,4 +1,14 @@
 Spree::Product.class_eval do
+  def size_guide_url
+    taxon = taxons.last
+    unless taxon && taxon.permalink.index("shoes")
+      return null
+    end
+
+    root_taxon = taxons.last.root.permalink
+    root_taxon = "kid" if (root_taxon == "boys" || root_taxon == "girls")
+    return "shoe-size/#{root_taxon}s.jpg"
+  end
 
   def option_values
     @_option_values ||= Spree::OptionValue.for_product(self)
