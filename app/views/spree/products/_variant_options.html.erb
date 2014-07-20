@@ -18,11 +18,11 @@
         </select>
       </div>
       <% index += 1 %>
-      <% if index == 1 %>
+      <% if index == 1 && size_guide = @product.size_guide_url %>
         <div class="size-link">
           <a href="#sizeguide" class="size" data-rel="popup" data-position-to="window" data-theme="b">내 사이즈 찾기</a>
           <div data-role="popup" id="sizeguide" class="photopopup" data-overlay-theme="a" data-corners="false" data-tolerance="30,15" >
-            <a href="#sizeguide"><%= image_tag @product.size_guide_url %></a>
+            <a href="#sizeguide"><%= image_tag size_guide %></a>
           </div>
         </div>
       <% end %>
