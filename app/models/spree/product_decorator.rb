@@ -2,7 +2,7 @@ Spree::Product.class_eval do
   def size_guide_url
     taxon = taxons.last
     unless taxon && taxon.permalink.index("shoes")
-      return null
+      return nil
     end
 
     root_taxon = taxons.last.root.permalink
