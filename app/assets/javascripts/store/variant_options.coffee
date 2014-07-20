@@ -10,6 +10,26 @@ window.variantOptions = (params) ->
     parent = $(@).parents('.variant-options')
     optionId = $(@).parents(".variant-options").attr("id").split("_")[2]
     optionIndex = $(@).parents(".variant-options").data("index")
+    elemId = $(@).find("option:selected").attr("id")
+    elemId = if elemId then elemId.split("-")[1] else null
+
+    # if there's only one variant option, not much to do...
+    if $(".variant-options").length == 1
+      if $(@)[0].selectedIndex == 0
+        $('#cart-form button[type=submit]').attr('disabled', true)
+        return
+      $('#cart-form button[type=submit]').attr('disabled', false)
+      variants = options[optionId][elemId]
+      ids = for key of variants
+        key
+      id = ids[0]
+      $('#variant_id').val(variants[id].id)
+      $('#cart-form button[type=submit]').attr('disabled', false)
+      $("#cart-form .price").text variants[id].price
+      return
+
+
+    # ...else we need to do some processing
     otherOptionId = $("[data-index=" + (optionIndex + 1) % 2 + "]").attr("id").split("_")[2]
     otherOptionSelector = $("#option_type_" + otherOptionId)
 
@@ -24,7 +44,6 @@ window.variantOptions = (params) ->
       return
 
     # get list of variants that match this option value
-    elemId = $(@).find("option:selected").attr("id").split("-")[1]
     variants = options[optionId][elemId]
     ids = for key of variants
       key
