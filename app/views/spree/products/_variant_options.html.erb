@@ -1,8 +1,13 @@
 <% if @product.has_variants? %>
-  <div id="product-variants">
+  <ul id="product-variants">
+    <% if @product.color %>
+      <li class="product-color">
+        컬러: <%= @product.color %>
+      </li>
+    <% end %>
     <% index = 0 %>
     <% @product.grouped_option_values.each do |type, values| %>
-      <div id="<%= dom_id(type) %>" class="variant-options" data-index="<%= index %>">
+      <li id="<%= dom_id(type) %>" class="variant-options select" data-index="<%= index %>">
         <select class="variant-option-values">
           <%= content_tag :option do %>
             <%= type.presentation.force_encoding("utf-8") %>를 고르세요
@@ -16,16 +21,8 @@
         <% end %>
             <!-- value.has_image? ? image_tag(value.image.url, :alt => value.presentation) : content_tag(:span, -->
         </select>
-      </div>
+      </li>
       <% index += 1 %>
-      <% if index == 1 && size_guide = @product.size_guide_url %>
-        <div class="size-link">
-          <a href="#sizeguide" class="size" data-rel="popup" data-position-to="window" data-theme="b">내 사이즈 찾기</a>
-          <div data-role="popup" id="sizeguide" class="photopopup" data-overlay-theme="a" data-corners="false" data-tolerance="30,15" >
-            <a href="#sizeguide"><%= image_tag size_guide %></a>
-          </div>
-        </div>
-      <% end %>
     <% end %>
 
     <%= hidden_field_tag "variant_id", "", :id => "variant_id", :class => "hidden" %>
