@@ -25,7 +25,7 @@ window.variantOptions = (params) ->
       id = ids[0]
       $('#variant_id').val(variants[id].id)
       $('#cart-form button[type=submit]').attr('disabled', false)
-      $("#cart-form .price").text variants[id].price
+      $("#cart-form .price").html variants[id].price
       return
 
 
@@ -61,7 +61,7 @@ window.variantOptions = (params) ->
           if $("#option-#{key}").val() == $("#option-#{key}").parent().val()
             $('#variant_id').val(variant[id].id)
             $('#cart-form button[type=submit]').attr('disabled', false)
-            $("#cart-form .price").text variant[id].price
+            $("#cart-form .price").html variant[id].price
 
     # reset "out of stock" display and update it
     if $(@).find("option:selected").hasClass("in-stock")
