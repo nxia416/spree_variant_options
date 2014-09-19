@@ -21,7 +21,7 @@
               <% classes = ["option-value"] %>
               <% unless (variants = @product.variants_for_option_value(value)).empty? %>
                 <% classes << ( variants.any? { |v| v.in_stock? } ? "in-stock" : "out-of-stock" ) if index == 0 %>
-                <%= content_tag :option, classes[1] == "in-stock" ? value.presentation : "[품절] #{value.presentation}" , :class => classes.join(" "), :id => "option-#{value.id}" %>
+                <%= content_tag :option, classes[1] == "out-of-stock" ? "[품절] #{value.presentation}" : value.presentation , :class => classes.join(" "), :id => "option-#{value.id}" %>
               <% end %>
             <% end %>
           </select>
