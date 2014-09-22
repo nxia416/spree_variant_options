@@ -30,8 +30,11 @@
       <% index += 1 %>
     <% end %>
 
-    <% if @product.variants.length == 1%>
+    <% active_variants = @product.variants.select { |v| !v.deleted? } %>
+    <% if active_variants.length == 1 %>
       <%= hidden_field_tag "variant_id", @product.variants.first.id %>
+    <% else if active_variants.length == 0 %>
+      <%= hidden_field_tag "variant_id", @product.master.id %>
     <% else %>
       <%= hidden_field_tag "variant_id", "", :id => "variant_id", :class => "hidden" %>
     <% end %>
