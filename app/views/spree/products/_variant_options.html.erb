@@ -1,6 +1,5 @@
 <% if @product.has_variants? %>
   <div id="product-variants" class="col-xs-12">
-    <!-- <h2><%= Spree.t(:variants) %></h2> -->
     <% index = 0 %>
     <% @product.grouped_option_values.each do |type, values| %>
       <div id="<%= dom_id(type) %>" class="variant-options index-<%= index %>">
