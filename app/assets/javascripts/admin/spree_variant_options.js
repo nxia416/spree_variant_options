@@ -1,3 +1,3 @@
-//= require admin/spree_backend
+//= require spree/backend/admin
 
 //= require admin/variant_images
