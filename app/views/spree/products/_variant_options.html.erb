@@ -1,6 +1,7 @@
 <% if @product.has_variants? %>
-  <div id="product-variants">
+  <div id="product-variants" class="col-md-12">
     <!-- <h2><%= Spree.t(:variants) %></h2> -->
+    <h6 class="product-section-title"><%= "Options" %></h6>
     <% index = 0 %>
     <% @product.grouped_option_values.each do |type, values| %>
       <div id="<%= dom_id(type) %>" class="variant-options index-<%= index %>">
@@ -16,7 +17,26 @@
           <% unless (variants = @product.variants_for_option_value(value)).empty? %>
             <% classes << ( variants.any? { |v| v.in_stock? } ? "in-stock" : "out-of-stock" ) if index == 0 %>
             <% classes << 'with-image' if value.has_image? %>
-            <li><%= link_to value.has_image? ? image_tag(value.image.url, :alt => value.presentation) : content_tag(:span, value.presentation), "#", :title => value.presentation, :class => classes.join(" "), :rel => "#{type.id}-#{value.id}" %></li>
+
+            <% if value.has_image? %>
+              <li>
+                <%= link_to content_tag(:span, value.presentation), 
+                  "#", 
+                  :title => value.presentation, 
+                  :class => classes.join(" "), 
+                  :rel => "#{type.id}-#{value.id}",
+                  "data-content" => "<img alt=\"test2\" src=\" " + value.image.url(:product) + " \">",
+                  "data-toggle"  => "popover",
+                  "data-placement"  => "top"
+                %>
+              </li>
+            <% else %>
+              <li><%= link_to content_tag(:span, value.presentation), "#", :title => value.presentation, :class => classes.join(" "), :rel => "#{type.id}-#{value.id}" %></li>
+            <% end %>
+
+            <% if false %>
+              <li><%= link_to value.has_image? ? image_tag(value.image.url, :alt => value.presentation) : content_tag(:span, value.presentation), "#", :title => value.presentation, :class => classes.join(" "), :rel => "#{type.id}-#{value.id}" %></li>              
+            <% end %>
           <% end %>
         <% end %>
           <li class="clear"></li>
@@ -39,3 +59,19 @@
     </script>
   </div>
 <% end%>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $( "[data-toggle='popover']" ).popover(
+      {
+        html: true,
+        trigger: 'hover',
+      }
+    );
+
+    // $( "[data-toggle='popover']" ).click(function (e) {
+    //   alert("click");
+    //   $(".selection").html("click");
+    // });
+  });
+</script>
