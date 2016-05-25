@@ -1,7 +1,9 @@
 Spree::OptionValue.class_eval do
 
   has_attached_file :image,
-    :default_style => SpreeVariantOptions::VariantConfig[:option_value_default_style],
+    # :default_style => SpreeVariantOptions::VariantConfig[:option_value_default_style],
+    styles: { mini: '48x48>', small: '100x100>', product: '240x240>' },
+    default_style: :small,
     :url           => SpreeVariantOptions::VariantConfig[:option_value_url],
     :path          => SpreeVariantOptions::VariantConfig[:option_value_path]
   
